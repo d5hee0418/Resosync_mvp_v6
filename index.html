@@ -2264,16 +2264,13 @@ async function rs(fromLoop){
 /* ── RESOREPLY 2.0 JS ── */
 /* ═══════════════════════════════════════ */
 
-const DS_API = 'https://api.deepseek.com/v1/chat/completions';
-const DS_KEY = 'sk-6da006b8599c4d1bae935302b1842d77';
+// ★ Cloudflare Worker 프록시 주소 (배포 후 여기만 교체)
+const WORKER_URL = 'https://resosync-proxy.d5hee0418.workers.dev';
 
 async function dsCall(systemPrompt, userPrompt, maxTokens) {
-  const res = await fetch(DS_API, {
+  const res = await fetch(WORKER_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + DS_KEY
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'deepseek-chat',
       max_tokens: maxTokens || 2000,
